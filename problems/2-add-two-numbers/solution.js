@@ -11,13 +11,13 @@
  * @return {ListNode}
  */
 const addTwoNumbers = (l1, l2) => {
-  const result = new ListNode();
-  let current = result
+  const head = new ListNode();
+  let current = head
   let n1 = l1
   let n2 = l2
-  let remainder = 0
+  let carry = 0
   while (n1 !== null || n2 !== null) {
-    let sum = remainder
+    let sum = carry
     if (n1 !== null) {
       sum += n1.val
       n1 = n1.next
@@ -28,10 +28,10 @@ const addTwoNumbers = (l1, l2) => {
     }
     current.next = new ListNode(sum % 10)
     current = current.next
-    remainder = sum >= 10 ? 1 : 0
+    carry = sum >= 10 ? 1 : 0
   }
-  if (remainder === 1) {
+  if (carry === 1) {
     current.next = new ListNode(1)
   }
-  return result.next
+  return head.next
 }
