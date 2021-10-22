@@ -14,7 +14,7 @@
   },
   "homepage": "https://github.com/balintsoos/leetcode-solutions-ts#readme",
   "scripts": {
-    "lint": "eslint 'src/**/*.ts'"
+    "lint": "eslint ."
   },
   "devDependencies": {
     "@types/node": "16.11.3",
