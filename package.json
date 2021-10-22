@@ -1,0 +1,24 @@
+{
+  "name": "leetcode-solutions",
+  "description": "My LeetCode solution",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/balintsoos/leetcode-solutions.git"
+  },
+  "author": "Balint Soos",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/balintsoos/leetcode-solutions/issues"
+  },
+  "homepage": "https://github.com/balintsoos/leetcode-solutions#readme",
+  "devDependencies": {
+    "@types/node": "16.11.3",
+    "ts-node": "10.3.1",
+    "typescript": "4.4.4"
+  }
+}
