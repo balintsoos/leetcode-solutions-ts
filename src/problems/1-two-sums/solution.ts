@@ -1,13 +1,11 @@
-const twoSum = (nums: number[], target: number): number[] => {
-  const hashTable = {};
-  for (let i = 0; i < nums.length; i++) {
-    const hashKey = nums[i].toString();
-    if (hashTable.hasOwnProperty(hashKey)) {
-      return [hashTable[hashKey], i];
+export function twoSum(nums: number[], target: number): number[] {
+  const map = new Map<number, number>();
+  const length = nums.length;
+  for (let i = 0; i < length; i++) {
+    if (map.has(nums[i])) {
+      return [map.get(nums[i]), i];
     }
-    const newHashKey = (target - nums[i]).toString();
-    hashTable[newHashKey] = i;
+    map.set(target - nums[i], i);
   }
-};
-
-console.log(twoSum([2, 7, 11, 15], 9));
+  return [];
+}
