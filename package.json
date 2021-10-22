@@ -1,24 +1,29 @@
 {
-  "name": "leetcode-solutions",
-  "description": "My LeetCode solution",
+  "name": "leetcode-solutions-ts",
   "version": "1.0.0",
+  "description": "My LeetCode solution in Typescript",
   "private": true,
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/balintsoos/leetcode-solutions.git"
+    "url": "git+https://github.com/balintsoos/leetcode-solutions-ts.git"
   },
   "author": "Balint Soos",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/balintsoos/leetcode-solutions/issues"
+    "url": "https://github.com/balintsoos/leetcode-solutions-ts/issues"
   },
-  "homepage": "https://github.com/balintsoos/leetcode-solutions#readme",
+  "homepage": "https://github.com/balintsoos/leetcode-solutions-ts#readme",
+  "scripts": {
+    "lint": "eslint 'src/**/*.ts'"
+  },
   "devDependencies": {
     "@types/node": "16.11.3",
-    "ts-node": "10.3.1",
+    "@typescript-eslint/eslint-plugin": "5.1.0",
+    "@typescript-eslint/parser": "5.1.0",
+    "eslint": "8.0.1",
+    "eslint-config-prettier": "8.3.0",
+    "eslint-plugin-prettier": "4.0.0",
+    "prettier": "2.4.1",
     "typescript": "4.4.4"
   }
 }
