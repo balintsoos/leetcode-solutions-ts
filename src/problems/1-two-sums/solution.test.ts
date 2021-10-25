@@ -1,6 +1,6 @@
 import { twoSum } from './solution';
 
-describe('Two Sum', () => {
+describe('1. Two Sum', () => {
   test('should return empty array if input is empty', () => {
     expect(twoSum([], 0)).toEqual([]);
   });
