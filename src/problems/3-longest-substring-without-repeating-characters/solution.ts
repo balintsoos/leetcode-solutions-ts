@@ -6,7 +6,8 @@ export function lengthOfLongestSubstring(s: string): number {
   let end = 0;
   while (end < length) {
     if (map.has(s[end])) {
-      start = Math.max(start, map.get(s[end]) + 1);
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      start = Math.max(start, map.get(s[end])! + 1);
     }
     map.set(s[end], end);
     max = Math.max(max, end - start + 1);
