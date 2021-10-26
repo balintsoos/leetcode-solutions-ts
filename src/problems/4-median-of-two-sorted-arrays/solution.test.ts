@@ -22,7 +22,6 @@ describe('4. Median of Two Sorted Arrays', () => {
   });
 
   test('should return the correct median if the length of the combined array is odd', () => {
-    expect(findMedianSortedArrays([1, 3], [2])).toEqual(2);
     expect(findMedianSortedArrays([1, 2], [1, 2, 3])).toEqual(2);
   });
 
