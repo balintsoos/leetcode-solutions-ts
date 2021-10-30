@@ -1,3 +1,3 @@
 export function longestPalindrome(s: string): string {
-  return s;
+  return s[0];
 }
