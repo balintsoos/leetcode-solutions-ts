@@ -34,24 +34,32 @@ function getCharIndexes(sLength: number, numRows: number): number[] {
 
 function getSeriesOfRow(sLength: number, numRows: number, rowIndex: number): number[] {
   const result = [];
-  const a = 2 * numRows - 2;
-  const b = rowIndex * 2;
   let current = rowIndex;
-  let tick = true;
+  const next = getNextFunction(numRows, rowIndex);
   while (current < sLength) {
     result.push(current);
-    if (b === 0) {
-      current = current + a;
-    } else if (a - b === 0) {
-      current = current + b;
-    } else if (tick) {
-      current = current + a - b;
-    } else {
-      current = current + b;
-    }
-    tick = !tick;
+    current = next(current);
   }
   return result;
+}
+
+function getNextFunction(numRows: number, rowIndex: number): (current: number) => number {
+  const a = 2 * numRows - 2;
+  if (rowIndex === 0) {
+    return (current) => current + a;
+  }
+  const b = rowIndex * 2;
+  if (a - b === 0) {
+    return (current) => current + b;
+  }
+  let tick = false;
+  return (current) => {
+    tick = !tick;
+    if (tick) {
+      return current + a - b;
+    }
+    return current + b;
+  };
 }
 
 /*
