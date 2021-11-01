@@ -19,46 +19,70 @@ export function convert(s: string, numRows: number): string {
   if (s.length === 1 || numRows === 1) {
     return s;
   }
-  return getCharIndexes(s.length, numRows)
-    .map((i) => s[i])
-    .join('');
-}
-
-function getCharIndexes(sLength: number, numRows: number): number[] {
-  const indexes = [];
-  for (let rowIndex = 0; rowIndex < numRows; rowIndex++) {
-    indexes.push(...getSeriesOfRow(sLength, numRows, rowIndex));
-  }
-  return indexes;
-}
-
-function getSeriesOfRow(sLength: number, numRows: number, rowIndex: number): number[] {
-  const result = [];
-  let current = rowIndex;
-  const next = getNextFunction(numRows, rowIndex);
-  while (current < sLength) {
-    result.push(current);
-    current = next(current);
+  let result = '';
+  let current = charIndexIterator(s.length, numRows);
+  while (current) {
+    result = result.concat(s[current.value]);
+    current = current.next();
   }
   return result;
 }
 
-function getNextFunction(numRows: number, rowIndex: number): (current: number) => number {
-  const a = 2 * numRows - 2;
-  if (rowIndex === 0) {
-    return (current) => current + a;
-  }
-  const b = rowIndex * 2;
-  if (a - b === 0) {
-    return (current) => current + b;
-  }
-  let tick = false;
-  return (current) => {
-    tick = !tick;
-    if (tick) {
-      return current + a - b;
+type Iteration = {
+  next: () => Iteration;
+  value: number;
+} | null;
+
+function charIndexIterator(sLength: number, numRows: number): Iteration {
+  const next = createNext(sLength, numRows);
+  return {
+    next: () => next(0, 0, getNextFunctionOfRow(numRows)(0)),
+    value: 0,
+  };
+}
+
+function createNext(
+  sLength: number,
+  numRows: number,
+): (rowIndex: number, currentValue: number, next: (currentValue: number) => number) => Iteration {
+  return (rowIndex, currentValue, next) => {
+    console.log({ rowIndex, currentValue });
+    const nextValue = next(currentValue);
+    if (nextValue < sLength) {
+      return {
+        value: nextValue,
+        next: () => createNext(sLength, numRows)(rowIndex, nextValue, next),
+      };
     }
-    return current + b;
+    const newRowIndex = rowIndex + 1;
+    if (newRowIndex < numRows) {
+      return {
+        value: newRowIndex,
+        next: () => createNext(sLength, numRows)(newRowIndex, newRowIndex, getNextFunctionOfRow(numRows)(newRowIndex)),
+      };
+    }
+    return null;
+  };
+}
+
+function getNextFunctionOfRow(numRows: number): (rowIndex: number) => (current: number) => number {
+  const a = 2 * numRows - 2;
+  return (rowIndex) => {
+    if (rowIndex === 0) {
+      return (current) => current + a;
+    }
+    const b = rowIndex * 2;
+    if (a - b === 0) {
+      return (current) => current + b;
+    }
+    let tick = false;
+    return (current) => {
+      tick = !tick;
+      if (tick) {
+        return current + a - b;
+      }
+      return current + b;
+    };
   };
 }
 
