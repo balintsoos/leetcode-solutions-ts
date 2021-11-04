@@ -16,33 +16,21 @@ P     I
 */
 
 export function convert(s: string, numRows: number): string {
-  if (s.length === 1 || numRows === 1) {
+  const length = Math.min(s.length, numRows);
+  if (length === 1) {
     return s;
   }
   let result = '';
-  for (const current of charIndexIterator(s.length, numRows)) {
-    result = result.concat(s[current]);
-  }
-  return result;
-}
-
-function* charIndexIterator(sLength: number, numRows: number) {
   const nextOfRow = getNextOfRow(numRows);
-  const length = Math.min(sLength, numRows);
   for (let rowIndex = 0; rowIndex < length; rowIndex++) {
     const next = nextOfRow(rowIndex);
-    for (const index of rowIterator(rowIndex, sLength, next)) {
-      yield index;
+    let i = rowIndex;
+    while (i < s.length) {
+      result = result.concat(s[i]);
+      i = next(i);
     }
   }
-}
-
-function* rowIterator(rowIndex: number, sLength: number, next: (current: number) => number) {
-  let i = rowIndex;
-  while (i < sLength) {
-    yield i;
-    i = next(i);
-  }
+  return result;
 }
 
 function getNextOfRow(numRows: number): (rowIndex: number) => (current: number) => number {
