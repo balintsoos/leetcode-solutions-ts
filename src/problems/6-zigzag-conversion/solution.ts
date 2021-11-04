@@ -54,7 +54,7 @@ function createNext(
       };
     }
     const newRowIndex = rowIndex + 1;
-    if (newRowIndex < numRows) {
+    if (newRowIndex < sLength && newRowIndex < numRows) {
       return {
         value: newRowIndex,
         next: () => createNext(sLength, numRows)(newRowIndex, newRowIndex, getNextFunctionOfRow(numRows)(newRowIndex)),

@@ -9,6 +9,10 @@ describe('6. Zigzag Conversion', () => {
     expect(convert('A', 2)).toEqual('A');
   });
 
+  test('should handle if number of rows are bigger than the length of the input', () => {
+    expect(convert('AB', 3)).toEqual('AB');
+  });
+
   test('should return the converted string', () => {
     expect(convert('PAYPALISHIRING', 3)).toEqual('PAHNAPLSIIGYIR');
     expect(convert('PAYPALISHIRING', 4)).toEqual('PINALSIGYAHRPI');
