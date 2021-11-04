@@ -46,7 +46,6 @@ function createNext(
   numRows: number,
 ): (rowIndex: number, currentValue: number, next: (currentValue: number) => number) => Iteration {
   return (rowIndex, currentValue, next) => {
-    console.log({ rowIndex, currentValue });
     const nextValue = next(currentValue);
     if (nextValue < sLength) {
       return {
