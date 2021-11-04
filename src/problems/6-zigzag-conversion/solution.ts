@@ -20,51 +20,32 @@ export function convert(s: string, numRows: number): string {
     return s;
   }
   let result = '';
-  let current = charIndexIterator(s.length, numRows);
-  while (current) {
-    result = result.concat(s[current.value]);
-    current = current.next();
+  for (const current of charIndexIterator(s.length, numRows)) {
+    result = result.concat(s[current]);
   }
   return result;
 }
 
-type Iteration = {
-  next: () => Iteration;
-  value: number;
-} | null;
-
-function charIndexIterator(sLength: number, numRows: number): Iteration {
-  const next = createNext(sLength, numRows);
-  return {
-    next: () => next(0, 0, getNextFunctionOfRow(numRows)(0)),
-    value: 0,
-  };
+function* charIndexIterator(sLength: number, numRows: number) {
+  const nextOfRow = getNextOfRow(numRows);
+  const length = Math.min(sLength, numRows);
+  for (let rowIndex = 0; rowIndex < length; rowIndex++) {
+    const next = nextOfRow(rowIndex);
+    for (const index of rowIterator(rowIndex, sLength, next)) {
+      yield index;
+    }
+  }
 }
 
-function createNext(
-  sLength: number,
-  numRows: number,
-): (rowIndex: number, currentValue: number, next: (currentValue: number) => number) => Iteration {
-  return (rowIndex, currentValue, next) => {
-    const nextValue = next(currentValue);
-    if (nextValue < sLength) {
-      return {
-        value: nextValue,
-        next: () => createNext(sLength, numRows)(rowIndex, nextValue, next),
-      };
-    }
-    const newRowIndex = rowIndex + 1;
-    if (newRowIndex < sLength && newRowIndex < numRows) {
-      return {
-        value: newRowIndex,
-        next: () => createNext(sLength, numRows)(newRowIndex, newRowIndex, getNextFunctionOfRow(numRows)(newRowIndex)),
-      };
-    }
-    return null;
-  };
+function* rowIterator(rowIndex: number, sLength: number, next: (current: number) => number) {
+  let i = rowIndex;
+  while (i < sLength) {
+    yield i;
+    i = next(i);
+  }
 }
 
-function getNextFunctionOfRow(numRows: number): (rowIndex: number) => (current: number) => number {
+function getNextOfRow(numRows: number): (rowIndex: number) => (current: number) => number {
   const a = 2 * numRows - 2;
   return (rowIndex) => {
     if (rowIndex === 0) {
