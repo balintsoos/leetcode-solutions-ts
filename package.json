@@ -15,7 +15,8 @@
   "homepage": "https://github.com/balintsoos/leetcode-solutions-ts#readme",
   "scripts": {
     "lint": "eslint .",
-    "test": "jest"
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "devDependencies": {
     "@types/jest": "29.5.0",
