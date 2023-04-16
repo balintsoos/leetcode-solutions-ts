@@ -1,5 +1,5 @@
 # leetcode-solutions-ts
-My LeetCode solution in Typescript
+My LeetCode solutions implemented in Typescript
 
 ## Problems 
 https://leetcode.com/problemset/all/
